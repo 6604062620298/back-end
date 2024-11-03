@@ -28,7 +28,13 @@ const options = {
 const swaggerSpec = swaggerJsDoc(options);
 
 const app = express(); 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+    datasources: {
+      db: {
+        url: process.env.POSTGRES_PRISMA_URL, // ใช้ environment variable ในการเชื่อมต่อฐานข้อมูล
+      },
+    },
+  });
 
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
